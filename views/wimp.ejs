@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,22 +18,58 @@
       rel="stylesheet"
     />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="/styles/shared.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
   </head>
   <body>
     <header id="main-header">
       <div id="logo"><a href="/">WIMP</a></div>
       <nav>
         <ul>
-          <li class="nav-item"><a href="/">메뉴1</a></li>
-          <li class="nav-item"><a href="/">메뉴2</a></li>
-          <li class="nav-item"><a href="/">로그인</a></li>
+          <li class="nav-item"><a href="/">Menu1</a></li>
+          <li class="nav-item"><a href="/">Menu2</a></li>
+          <li class="nav-item" id="log-in"><a href="/">SignIn</a></li>
           <!-- 추후에 변경 -> 로그인시 내정보로 나오게 -->
+          <li class="nav-item" id="log-in"><a href="/">Profile</a></li>
+          <li class="nav-item" id="log-in"><a href="/">LogOut</a></li>
+          <li class="nav-item" id="log-in"><a href="/"></a>Register</li>
         </ul>
       </nav>
     </header>
 
-    <body></body>
+    <body>
+      <section id="main">
+        <article id="selection">
+          <ul>
+            <li class="selection-item"><a href="/">aa</a></li>
+            <li class="selection-item"><a href="/">bb</a></li>
+            <li class="selection-item"><a href="/">cc</a></li>
+          </ul>
+        </article>
+        <article id="main-board">
+          <div>
+            <h3>test</h3>
+            <p>test</p>
+          </div>
+        </article>
+      </section>
+
+      <section>
+        <div>
+          <ul>
+            <li><a href="/">Make a Team</a></li>
+            <li><a href="/">Find my Peer</a></li>
+          </ul>
+        </div>
+      </section>
+    </body>
 
     <footer></footer>
   </body>

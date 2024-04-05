@@ -1,0 +1,24 @@
+#main {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 1.5rem 10rem;
+  display: flex;
+  justify-content: center;
+}
+
+#selection {
+  width: 15rem;
+  background-color: rgb(92, 92, 92);
+
+  flex-shrink: 0;
+}
+
+#main-board {
+  width: 1000px;
+  height: 450px;
+
+  background-color: rgb(189, 189, 189);
+
+  flex-shrink: 0;
+}
