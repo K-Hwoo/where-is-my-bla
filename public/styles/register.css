@@ -1,0 +1,58 @@
+#register-form {
+  height: 700px;
+  width: 500px;
+
+  position: relative;
+  margin: 0 auto;
+  padding: 1rem 3rem;
+  top: 200px;
+
+  border-radius: 6px;
+  border: 1px solid rgb(206, 206, 206);
+  box-shadow: 2px 3px 8px rgb(68, 67, 67);
+
+  background-color: white;
+}
+
+#form-title {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+#form-title h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: "Raleway", sans-serif;
+  font-style: italic;
+}
+
+#form-title p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: italic;
+  color: rgb(41, 41, 41);
+}
+
+label {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgb(41, 41, 41);
+}
+
+form button {
+  display: block;
+  margin: 0 auto;
+}
+
+#go-to-login {
+  margin-top: 30px;
+}
+
+#go-to-login h3 {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgb(41, 41, 41);
+}
