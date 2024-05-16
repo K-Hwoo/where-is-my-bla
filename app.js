@@ -1,7 +1,9 @@
 const path = require("path");
 const wimpRoutes = require("./routes/wimp.js");
+const db = require("./data/database");
 
 const express = require("express");
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,4 +20,6 @@ app.use(function (error, req, res, next) {
   res.status(500).render("500");
 });
 
-app.listen(3000);
+db.connetToDatabase().then(function () {
+  app.listen(3000);
+});

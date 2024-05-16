@@ -35,6 +35,8 @@ a {
   font-size: 3.5rem;
 
   color: rgb(45, 45, 45);
+
+  flex-shrink: 0;
 }
 
 nav ul {
