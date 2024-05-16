@@ -25,11 +25,11 @@ video {
   left: 160px;
   z-index: 1000;
 
-  width: 1000px;
+  width: 1100px;
   height: 450px;
 
-  background-color: rgba(219, 219, 219, 0.1);
-  box-shadow: 2px 3px 8px rgb(105, 101, 101);
+  background-color: rgba(38, 36, 36, 0.2);
+  box-shadow: 2px 2px 8px rgb(26, 25, 25);
   border-radius: 12px;
   padding: 40px 55px;
 }
@@ -38,5 +38,35 @@ h1 {
   color: rgb(255, 255, 255);
   font-family: "Raleway", sans-serif;
   font-size: 4rem;
-  text-shadow: 4px 2px 8px rgb(46, 46, 46);
+  font-weight: 900;
+  text-shadow: 2px 1px 6px rgb(46, 46, 46);
+}
+
+p {
+  color: rgb(255, 255, 255);
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 2px 1px 6px rgb(46, 46, 46);
+  letter-spacing: 0.04cm;
+  margin: 0.6rem;
+}
+
+#start_btn {
+  display: inline-block;
+
+  color: rgb(36, 36, 36);
+  background-color: white;
+
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 34px;
+  margin-left: 0.6rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+#start_btn:hover {
+  background-color: rgb(227, 255, 226);
 }
