@@ -1,4 +1,5 @@
 const path = require("path");
+const userRoutes = require("./routes/user.js");
 const wimpRoutes = require("./routes/wimp.js");
 const db = require("./data/database");
 
@@ -13,6 +14,7 @@ app.use(express.static("videos"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(userRoutes);
 app.use(wimpRoutes);
 
 app.use(function (error, req, res, next) {

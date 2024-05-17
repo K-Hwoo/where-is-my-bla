@@ -5,22 +5,21 @@ const db = require("../data/database");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  res.render("wimp");
+// 메인 페이지 라우팅은 user.js에서
+
+router.get("/jointeam", function (req, res) {
+  res.render("team-list");
 });
 
-router.get("/register", function (req, res) {
-  res.render("register");
+router.get("/buildteam", function (req, res) {
+  res.render("team-build");
 });
 
-router.post("/register", async function (req, res) {
-  const inputData = req.body;
-  const enteredEmail = userData["user-email"];
-  const enteredPassword = userData.res.redirect("/login");
-});
+router.post("/buildteam", function (req, res) {});
 
-router.get("/login", function (req, res) {
-  res.render("login");
+// 팀 세부정보 보기 라우팅
+router.get("/teamdetail", function (req, res) {
+  res.render("team-detail");
 });
 
 module.exports = router;
