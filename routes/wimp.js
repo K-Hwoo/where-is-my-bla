@@ -12,6 +12,11 @@ router.get("/jointeam", function (req, res) {
 });
 
 router.get("/buildteam", function (req, res) {
+  if (!req.session.isAuthenticated) {
+    req.session.loginFlag.redirectTeamBuildPage = true;
+    return res.redirect("/login");
+  }
+
   res.render("team-build");
 });
 

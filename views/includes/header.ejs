@@ -1,14 +1,30 @@
 <header id="main-header">
-    <div id="logo"><a href="/">WIMP</a></div>
-    <nav>
-      <ul>
-        <li class="nav-item"><a href="/jointeam"">Join</a></li>
-        <li class="nav-item"><a href="/buildteam">Build</a></li>
-        <li class="nav-item" id="log-in"><a href="/login">SignIn</a></li>
-        <!-- 추후에 변경 -> 로그인시 내정보로 나오게 -->
-        <li class="nav-item" id="log-in"><a href="/userprofile">Profile</a></li>
-        <li class="nav-item" id="log-in"><a href="/">LogOut</a></li>
-        <li class="nav-item" id="log-in"><a href="/register">Register</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div id="logo"><a href="/">WIMP</a></div>
+  <nav>
+    <ul>
+      <% if (locals.nickname) { %>
+      <li class="nav-item nav-status">
+        Welcome! &nbsp&nbsp&nbsp
+        <span id="user-nickname"><%= locals.nickname %> &nbsp ||</span>
+      </li>
+      <% } else { %>
+      <li class="nav-item nav-status">Please, SignIn or Register ||</li>
+      <% } %>
+      <li class="nav-item"><a href="/jointeam">Join a Team</a></li>
+      <li class="nav-item"><a href="/buildteam">Build a Team</a></li>
+      <% if (!locals.isAuth) { %>
+      <li class="nav-item"><a href="/login">SignIn</a></li>
+      <% } %> <% if (locals.isAuth) { %>
+      <li class="nav-item"><a href="/userprofile">Profile</a></li>
+      <% } %> <% if (locals.isAuth) { %>
+      <li class="nav-item">
+        <form action="/logout" method="POST" id="logout-form">
+          <button id="logout-btn">Logout</button>
+        </form>
+      </li>
+      <% } %> <% if (!locals.isAuth) { %>
+      <li class="nav-item"><a href="/register">Register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

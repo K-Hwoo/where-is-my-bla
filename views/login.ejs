@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include("includes/header_with_bootstrap.ejs") %>
+    <%- include("includes/head_with_bootstrap.ejs") %>
     <link rel="stylesheet" href="/styles/login.css" />
   </head>
   <body>
@@ -13,7 +13,7 @@
           <h2>WIMP</h2>
           <p>Build your team easily</p>
         </div>
-        <form action="/register-user" method="POST">
+        <form action="/login" method="POST">
           <div class="mb-3">
             <label for="user-email" class="form-label"> Email address </label>
             <input
@@ -22,6 +22,8 @@
               id="user-email"
               name="user-email"
               aria-describedby="emailHelp"
+              required
+              value="<%= inputData.email %>"
             />
             <!-- <div id="emailHelp" class="form-text">
               We'll never share your email with anyone else.
@@ -35,6 +37,8 @@
               class="form-control"
               id="user-password"
               name="user-password"
+              required
+              value="<%= inputData.password %>"
             />
           </div>
 

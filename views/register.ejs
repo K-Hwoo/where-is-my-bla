@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include("includes/header_with_bootstrap.ejs") %>
+    <%- include("includes/head_with_bootstrap.ejs") %>
     <link rel="stylesheet" href="/styles/register.css" />
   </head>
   <body>
@@ -13,15 +13,17 @@
           <h2>WIMP</h2>
           <p>Build your team easily</p>
         </div>
-        <form action="/register-user" method="POST">
+        <form action="/register" method="POST">
           <div class="mb-3">
-            <label for="user-email" class="form-label"> Email address </label>
+            <label for="user-email" class="form-label"> Email address * </label>
             <input
               type="email"
               class="form-control"
               id="user-email"
               name="user-email"
               aria-describedby="emailHelp"
+              required
+              value="<%= inputData.email %>"
             />
             <!-- <div id="emailHelp" class="form-text">
               We'll never share your email with anyone else.
@@ -31,32 +33,37 @@
           <div class="mb-3">
             <label for="nickname" class="form-label">Nickname</label>
             <input
-              type="password"
+              type="text"
               class="form-control"
               id="nickname"
               name="nickname"
+              value="<%= inputData.nickname %>"
             />
           </div>
 
           <div class="mb-3">
-            <label for="user-password" class="form-label">Password</label>
+            <label for="user-password" class="form-label">Password *</label>
             <input
               type="password"
               class="form-control"
               id="user-password"
               name="user-password"
+              required
+              value="<%= inputData.password %>"
             />
           </div>
 
           <div class="mb-3">
             <label for="user-password-confirm" class="form-label">
-              Password-Confirm
+              Password-Confirm *
             </label>
             <input
               type="password"
               class="form-control"
               id="user-password-confirm"
               name="user-password-confirm"
+              required
+              value="<%= inputData.confirmPassword %>"
             />
           </div>
 

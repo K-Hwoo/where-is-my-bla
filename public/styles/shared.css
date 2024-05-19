@@ -46,6 +46,7 @@ nav ul {
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .nav-item {
@@ -55,9 +56,22 @@ nav ul {
   font-size: 1.4rem;
 }
 
+#logout-btn {
+  background-color: transparent;
+  font: inherit;
+  font-size: 1.3rem;
+  border-radius: 5px;
+}
+
+#logout-btn:hover {
+  color: rgb(247, 247, 247);
+  background-color: rgb(45, 45, 45);
+  cursor: pointer;
+}
+
 .nav-item a {
   color: rgb(45, 45, 45);
-  padding: 2px 4px;
+  padding: 2px 6px;
   border-radius: 4px;
 }
 
@@ -69,4 +83,17 @@ nav ul {
 
 .nav-item:last-child {
   margin-right: 0;
+}
+
+.nav-status {
+  margin-right: 50px;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+#user-nickname {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 900;
+  color: black;
 }
