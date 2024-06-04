@@ -8,8 +8,27 @@
     <%- include("includes/header.ejs") %>
 
     <main>
-      <p>팀 리스트 페이지 입니다.</p>
-      <a href="/teamdetail">Multimedia Dummy team</a>
+      <section id="team-list-bar">
+        <a href="/buildteam" id="to-go-build">Build a TEAM</a>
+        <form action="/search" method="GET">
+          <input id="search-input" type="text" />
+        </form>
+        <button>order Oldest</button>
+      </section>
+
+      <section id="">
+        <h1>All Posts</h1>
+        <% if (!posts || posts.length === 0) { %>
+        <p>No posts found - maybe start creating some?</p>
+        <a class="btn" href="/teambuild">Create a new Post</a>
+        <% } else { %>
+        <ol id="posts-list">
+          <% for (const post of posts) { %>
+          <li><%- include('includes/post-item', { post: post }) %></li>
+          <% } %>
+        </ol>
+        <% } %>
+      </section>
     </main>
   </body>
 </html>

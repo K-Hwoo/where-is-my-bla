@@ -2,8 +2,10 @@ const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
 
+const mongodb = require("mongodb");
+const ObjectId = mongodb.ObjectId;
+
 const db = require("../data/database");
-let test = require("./wimp.js");
 
 const router = express.Router();
 
@@ -223,12 +225,19 @@ router.post("/logout", function (req, res) {
   res.redirect("/");
 });
 
-router.get("/userprofile", function (req, res) {
+router.get("/userprofile/:userId", async function (req, res) {
   if (!req.session.isAuthenticated) {
-    return res.redirect("/login");
+    return res.redirect("/");
   }
 
-  res.render("profile");
+  const userId = req.params.userId; // 추후에 다른 유저랑 비교할 때 용
+
+  const name = await db
+    .getDb()
+    .collection("users")
+    .findOne({ _id: new ObjectId(req.session.user.id) });
+
+  res.render("profile", { name: name.nickname });
 });
 
 module.exports = router;

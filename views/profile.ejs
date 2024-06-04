@@ -7,6 +7,40 @@
   <body>
     <%- include("includes/header.ejs") %>
 
-    <main><h1>개인 프로필 페이지 입니다.</h1></main>
+    <main>
+      <section id="profile">
+        <div id="photo">
+          <img src="sample.png" alt="my-photo" />
+        </div>
+        <div id="profile-describe">
+          <p id="profile-name"><%= name %></p>
+          <p id="profile-summary">안녕하세요. 원숭이학교장 입니다.</p>
+          <p id="profile-current-team">현재 X팀 참여 중!</p>
+        </div>
+      </section>
+
+      <section>
+        <ol id="current-team">
+          <li>
+            <article>
+              <h2 class="my-team-name">asdf</h2>
+              <p class="my-team-summary">asdfghjklqwertyu</p>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h2 class="my-team-name">asdf</h2>
+              <p class="my-team-summary">zxcvbnmasdfghjkl</p>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h2 class="my-team-name">asdf</h2>
+              <p class="my-team-summary">asdfghjklqwertyui</p>
+            </article>
+          </li>
+        </ol>
+      </section>
+    </main>
   </body>
 </html>

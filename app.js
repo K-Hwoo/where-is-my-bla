@@ -20,7 +20,9 @@ const sessionStore = new mongoDBStore({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(express.static("images"));
 app.use(express.static("videos"));
+
 app.use(
   session({
     secret: "super-secret",
@@ -47,6 +49,7 @@ app.use(async function (req, res, next) {
 
   res.locals.isAuth = isAuth; // global variable, 모든 템플릿에서 사용 가능
   res.locals.nickname = nickname;
+  res.locals.userId = user.id;
   next();
 });
 

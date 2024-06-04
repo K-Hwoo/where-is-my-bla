@@ -5,3 +5,104 @@
 main {
   text-align: center;
 }
+
+#team-list-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  height: 80px;
+  width: 1200px;
+  margin: 80px auto 70px auto;
+  padding: 15px;
+
+  background-color: rgb(230, 229, 229);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+#to-go-build {
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: 2px rgb(22, 22, 22) solid;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+#to-go-build:hover {
+  background-color: rgb(238, 238, 238);
+  color: rgb(100, 100, 100);
+}
+
+#to-go-build:visited {
+  color: rgb(66, 66, 66);
+}
+
+#search-input {
+  height: 20px;
+  width: 280px;
+  border-radius: 5px;
+  background-color: rgb(252, 252, 252);
+
+  text-align: right;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+}
+
+/* All posts page */
+
+#all-posts {
+  text-align: center;
+}
+
+#posts-list {
+  margin: 3rem auto;
+  max-width: 50rem;
+  list-style: none;
+}
+
+.post-item {
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: rgb(220, 204, 252);
+}
+
+.post-item h2,
+.post-item p {
+  margin: 0.5rem 0;
+}
+
+.post-item-author {
+  font-style: italic;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post-actions .btn-alt {
+  padding: 0;
+}
+
+/* Post detail page */
+
+#post-meta {
+  color: rgb(156, 149, 149);
+}
+
+#post-meta address {
+  display: inline;
+}
+
+#post-meta time {
+  font-style: italic;
+}
+
+#body {
+  white-space: pre-wrap; /* This ensures that line breaks and whitespace are kept */
+}

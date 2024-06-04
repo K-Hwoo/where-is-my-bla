@@ -2,13 +2,44 @@
 <html lang="en">
   <head>
     <%- include("includes/head.ejs") %>
-    <link rel="stylesheet" href="/styles/team-list.css" />
+    <link rel="stylesheet" href="/styles/team-build.css" />
   </head>
   <body>
     <%- include("includes/header.ejs") %>
 
     <main>
-      <p>팀 빌드 페이지 입니다.</p>
+      <section>
+        <h1>Build your TEAM!</h1>
+        <form action="/buildteam" method="POST">
+          <div class="form-control">
+            <label for="title">Post Title</label>
+            <input type="text" id="title" name="title" required />
+          </div>
+          <div class="form-control">
+            <label for="summary">Post Summary</label>
+            <input
+              type="text"
+              id="summary"
+              name="summary"
+              required
+              maxlength="255"
+            />
+          </div>
+          <div class="form-control">
+            <label for="content">Post Content</label>
+            <textarea id="content" name="content" required rows="5"></textarea>
+          </div>
+
+          <div class="form-control">
+            <label for="members">Members</label>
+            <input type="number" id="members" name="members" required />
+          </div>
+
+          <input type="file" />
+
+          <button class="btn">Add Post</button>
+        </form>
+      </section>
     </main>
   </body>
 </html>
