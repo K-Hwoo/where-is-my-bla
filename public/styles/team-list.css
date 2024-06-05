@@ -59,10 +59,15 @@ main {
   margin: 3rem auto;
   max-width: 50rem;
   list-style: none;
+  padding: 0;
+}
+
+#order-oldest {
+  margin: 0 40px;
 }
 
 .post-item {
-  margin: 1rem 0;
+  margin: 1.3rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   padding: 1rem;

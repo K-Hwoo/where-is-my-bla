@@ -13,11 +13,11 @@
         <form action="/search" method="GET">
           <input id="search-input" type="text" />
         </form>
-        <button>order Oldest</button>
+        <button id="order-oldest">Oldest</button>
       </section>
 
       <section id="">
-        <h1>All Posts</h1>
+        <h1>All Teams recruiting members</h1>
         <% if (!posts || posts.length === 0) { %>
         <p>No posts found - maybe start creating some?</p>
         <a class="btn" href="/teambuild">Create a new Post</a>
