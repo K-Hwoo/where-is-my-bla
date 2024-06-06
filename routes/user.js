@@ -1,11 +1,24 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
+const multer = require("multer");
+// const path = require("path");
 
 const mongodb = require("mongodb");
 const ObjectId = mongodb.ObjectId;
 
 const db = require("../data/database");
+
+const storageConfig = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "images"); // error, 파일을 저장하려는 폴더 경로
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // error, 저장 파일 이름
+  },
+});
+
+const upload = multer({ storage: storageConfig });
 
 const router = express.Router();
 
@@ -126,6 +139,10 @@ router.post("/register", async function (req, res) {
     email: enteredEmail,
     nickname: enteredNickname,
     password: hashedPassword,
+    location: "O",
+    politics: "O",
+    summary: "안녕하세요. 원숭이학교장 입니다.",
+    imagePath: "default-image.jpeg",
   };
 
   await db.getDb().collection("users").insertOne(user);
@@ -230,14 +247,118 @@ router.get("/userprofile/:userId", async function (req, res) {
     return res.redirect("/");
   }
 
-  const userId = req.params.userId; // 추후에 다른 유저랑 비교할 때 용
+  try {
+    const userData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ _id: new ObjectId(req.session.user.id) });
 
-  const name = await db
-    .getDb()
-    .collection("users")
-    .findOne({ _id: new ObjectId(req.session.user.id) });
+    const ownPosts = await db
+      .getDb()
+      .collection("posts")
+      .find({ "who.id": new ObjectId(req.session.user.id) })
+      .toArray();
 
-  res.render("profile", { name: name.nickname });
+    const joinTeams = await db
+      .getDb()
+      .collection("posts")
+      .find({
+        members: new ObjectId(req.session.user.id),
+      })
+      .toArray();
+
+    res.render("profile", {
+      userData: userData,
+      ownPosts: ownPosts,
+      joinTeams: joinTeams,
+      howManyTeams: ownPosts.length + joinTeams.length,
+    });
+  } catch (error) {
+    console.error("Error fetching teams:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
+
+router.get("/another-profile/:anotherUserId", async function (req, res) {
+  if (!req.session.isAuthenticated) {
+    return res.redirect("/");
+  }
+
+  const anotherUserId = req.params.anotherUserId;
+
+  if (!ObjectId.isValid(anotherUserId)) {
+    return res.status(400).send("Invalid user ID format");
+  }
+
+  const userId = new ObjectId(anotherUserId);
+
+  try {
+    const AnotherUserData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ _id: userId });
+
+    if (!AnotherUserData) {
+      return res.status(404).send("User not found");
+    }
+
+    const AnotherUserOwnPosts = await db
+      .getDb()
+      .collection("posts")
+      .find({ "who.id": userId })
+      .toArray();
+
+    const AnotherUserjoinTeams = await db
+      .getDb()
+      .collection("posts")
+      .find({
+        members: userId,
+      })
+      .toArray();
+
+    res.render("another-profile", {
+      AnotherUserData: AnotherUserData,
+      AnotherUserOwnPosts: AnotherUserOwnPosts,
+      AnotherUserjoinTeams: AnotherUserjoinTeams,
+      howManyTeams: AnotherUserOwnPosts.length + AnotherUserjoinTeams.length,
+    });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post(
+  "/edit-profile",
+  upload.single("profileImage"),
+  async function (req, res) {
+    const uploadedImageFile = req.file; // 파일 경로에 대한 정보를 얻을 수 있음
+    const userId = new ObjectId(req.session.user.id);
+    const { nickname, location, politics, summary } = req.body;
+
+    if (!req.file) return res.send("Please upload a file");
+    try {
+      await db
+        .getDb()
+        .collection("users")
+        .updateOne(
+          { _id: userId },
+          {
+            $set: {
+              nickname: nickname,
+              location: location,
+              politics: politics,
+              summary: summary,
+              imagePath: uploadedImageFile.path,
+            },
+          }
+        );
+      res.redirect("/userprofile/" + userId);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
 
 module.exports = router;

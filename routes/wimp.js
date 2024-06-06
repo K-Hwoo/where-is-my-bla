@@ -13,7 +13,7 @@ router.get("/jointeam", async function (req, res) {
   const posts = await db
     .getDb()
     .collection("posts")
-    .find({}, { title: 1, summary: 1, "who.nickname": 1 })
+    .find({}, { title: 1, summary: 1, who: 1 })
     .toArray();
 
   res.render("team-list", { posts: posts });
@@ -37,6 +37,8 @@ router.post("/buildteam", async function (req, res) {
     title: req.body.title,
     summary: req.body.summary,
     body: req.body.content,
+    memNum: req.body.members,
+    members: [userID],
     date: new Date(),
     who: {
       id: userID,
@@ -52,26 +54,106 @@ router.post("/buildteam", async function (req, res) {
 });
 
 // 팀 세부정보 보기 라우팅
-router.get("/posts/:id", async function (req, res) {
-  const postId = req.params.id;
-  const post = await db
+router.get("/post/:id", async function (req, res) {
+  try {
+    const userId = new ObjectId(req.session.user.id);
+    const postId = req.params.id;
+
+    const post = await db
+      .getDb()
+      .collection("posts")
+      .findOne({ _id: new ObjectId(postId) }, { summary: 0 });
+
+    if (!post) {
+      return res.status(404).render("404");
+    }
+
+    post.humanReadableDate = post.date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    post.date = post.date.toISOString();
+
+    const members = await db
+      .getDb()
+      .collection("users")
+      .find({
+        _id: { $in: post.members },
+      })
+      .toArray();
+
+    const isMember = post.members.some((member) => member.equals(userId));
+
+    res.render("team-detail", {
+      post: post,
+      members: members,
+      forCheckMine: String(post.who.id),
+      isMe: String(req.session.user.id),
+      isMember: isMember,
+    });
+  } catch (error) {
+    console.error("Error fetching team data:", error);
+    res.render(500);
+  }
+});
+
+router.post("/jointeam/:postId", async function (req, res) {
+  const userId = new ObjectId(req.session.user.id);
+  const postId = new ObjectId(req.params.postId);
+
+  try {
+    // 팀의 members 배열에 사용자 ID 추가
+    await db
+      .getDb()
+      .collection("posts")
+      .updateOne(
+        { _id: postId },
+        { $addToSet: { members: userId } } // $addToSet을 사용하여 중복 방지
+      );
+    res.redirect("/userprofile/" + userId);
+  } catch (error) {
+    console.error("Error joining team:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Delete Post
+router.post("/post/:postId/delete", async function (req, res) {
+  const postId = new ObjectId(req.params.postId);
+
+  await db.getDb().collection("posts").deleteOne({ _id: postId });
+  res.redirect("/jointeam");
+});
+
+// Edit Post
+router.get("/post/:postId/edit", async function (req, res) {
+  const postId = new ObjectId(req.params.postId);
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  res.render("edit-post", { post: post });
+});
+
+router.post("/post/:postId/edit", async function (req, res) {
+  const postId = new ObjectId(req.params.postId);
+
+  await db
     .getDb()
     .collection("posts")
-    .findOne({ _id: new ObjectId(postId) }, { summary: 0 });
+    .updateOne(
+      { _id: postId },
+      {
+        $set: {
+          title: req.body.title,
+          summary: req.body.summary,
+          body: req.body.content,
+          memNum: req.body.members,
+        },
+      }
+    );
 
-  if (!post) {
-    return res.status(404).render("404");
-  }
-
-  post.humanReadableDate = post.date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  post.date = post.date.toISOString();
-
-  res.render("team-detail", { post: post, comments: null });
+  res.redirect(`/post/${postId}`);
 });
 
 module.exports = router;

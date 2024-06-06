@@ -22,20 +22,21 @@ main {
 }
 
 #to-go-build {
-  font-size: 1.3rem;
-  font-weight: 700;
-  border: 2px rgb(22, 22, 22) solid;
-  padding: 4px 6px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 6px 10px;
   border-radius: 6px;
+  background-color: rgba(19, 19, 19, 0.8);
+  color: rgb(229, 229, 229);
 }
 
 #to-go-build:hover {
-  background-color: rgb(238, 238, 238);
+  background-color: rgba(93, 93, 93, 0.8);
   color: rgb(100, 100, 100);
 }
 
 #to-go-build:visited {
-  color: rgb(66, 66, 66);
+  color: rgb(229, 229, 229);
 }
 
 #search-input {
@@ -68,10 +69,16 @@ main {
 
 .post-item {
   margin: 1.3rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-  padding: 1rem;
-  background-color: rgb(220, 204, 252);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .post-item h2,
@@ -79,8 +86,18 @@ main {
   margin: 0.5rem 0;
 }
 
+.post-item a {
+  font-size: 1.7rem;
+  color: #555;
+}
+
+.post-item a:visited {
+  color: #555;
+}
+
 .post-item-author {
   font-style: italic;
+  color: #555;
 }
 
 .post-actions {
@@ -88,26 +105,33 @@ main {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .post-actions .btn-alt {
-  padding: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Post detail page */
-
-#post-meta {
-  color: rgb(156, 149, 149);
+.post-actions .btn-alt:hover {
+  background-color: #0056b3;
 }
 
-#post-meta address {
-  display: inline;
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#post-meta time {
-  font-style: italic;
-}
-
-#body {
-  white-space: pre-wrap; /* This ensures that line breaks and whitespace are kept */
+.btn:hover {
+  background-color: #0056b3;
 }

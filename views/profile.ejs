@@ -3,6 +3,7 @@
   <head>
     <%- include("includes/head.ejs") %>
     <link rel="stylesheet" href="/styles/profile.css" />
+    <script src="/scripts/profile.js" defer></script>
   </head>
   <body>
     <%- include("includes/header.ejs") %>
@@ -10,35 +11,101 @@
     <main>
       <section id="profile">
         <div id="photo">
-          <img src="sample.png" alt="my-photo" />
+          <img src="../<%= userData.imagePath %>" alt="my-photo" />
         </div>
+
         <div id="profile-describe">
-          <p id="profile-name"><%= name %></p>
-          <p id="profile-summary">안녕하세요. 원숭이학교장 입니다.</p>
-          <p id="profile-current-team">현재 X팀 참여 중!</p>
+          <p id="profile-name"><%= userData.nickname %></p>
+          <p id="profile-summary"><%= userData.summary %></p>
+          <p id="profile-location">Location : <%= userData.location %></p>
+          <p id="profile-politics">Politics : <%= userData.politics %></p>
+          <p id="profile-current-team">
+            현재 <strong><%= howManyTeams %></strong> 팀 참여 중!
+          </p>
+          <button class="btn" id="edit-profile-btn">프로필 수정</button>
         </div>
       </section>
 
+      <!-- Modal for editing profile -->
+      <div id="edit-profile-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form
+            id="edit-profile-form"
+            action="/edit-profile"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <div class="form-group">
+              <label for="nickname">Nickname</label>
+              <input
+                type="text"
+                id="nickname"
+                name="nickname"
+                value="<%= locals.nickname %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value="<%= userData.location %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="politics">Politics</label>
+              <input
+                type="text"
+                id="politics"
+                name="politics"
+                value="<%= userData.politics %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="summary">Summary:</label>
+              <textarea id="summary" name="summary">
+<%= userData.summary %></textarea
+              >
+            </div>
+
+            <div class="form-control">
+              <label for="profileImage">Profile Image</label>
+              <input
+                type="file"
+                id="profileImage"
+                name="profileImage"
+                accept=".jpg, .png, .jpeg"
+              />
+            </div>
+
+            <button type="submit" class="btn">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
       <section>
         <ol id="current-team">
+          <% for (const joinTeam of joinTeams) { %>
           <li>
-            <article>
-              <h2 class="my-team-name">asdf</h2>
-              <p class="my-team-summary">asdfghjklqwertyu</p>
+            <article class="current-team-element-joined">
+              <a href="/post/<%= joinTeam._id %>" class="my-team-name">
+                <h2 class="my-team-name"><%= joinTeam.title %></h2></a
+              >
+              <p class="my-team-summary"><%= joinTeam.summary %></p>
             </article>
           </li>
+          <% } %> <% for (const ownPost of ownPosts) { %>
           <li>
-            <article>
-              <h2 class="my-team-name">asdf</h2>
-              <p class="my-team-summary">zxcvbnmasdfghjkl</p>
+            <article class="current-team-element-own">
+              <a href="/post/<%= ownPost._id %>" class="my-team-name">
+                <h2 class="my-team-name"><%= ownPost.title %></h2></a
+              >
+              <p class="my-team-summary"><%= ownPost.summary %></p>
             </article>
           </li>
-          <li>
-            <article>
-              <h2 class="my-team-name">asdf</h2>
-              <p class="my-team-summary">asdfghjklqwertyui</p>
-            </article>
-          </li>
+          <% } %>
         </ol>
       </section>
     </main>

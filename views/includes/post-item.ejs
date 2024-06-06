@@ -1,12 +1,8 @@
 <article class="post-item">
-  <h2><%= post.title %></h2>
+  <a class="btn" href="/post/<%= post._id %>">
+    <h2><%= post.title %></h2>
+  </a>
   <p class="post-item-author">By <%= post.who.nickname %></p>
   <p><%= post.summary %></p>
-  <div class="post-actions">
-    <form action="/posts/<%= post._id %>/delete" method="POST">
-      <button class="btn btn-alt">Delete Post</button>
-    </form>
-    <a href="/posts/<%= post._id %>/edit">Edit Post</a>
-    <a class="btn" href="/posts/<%= post._id %>">View Post</a>
-  </div>
+  <p>Members: <%= post.members.length %> / <%= post.memNum %></p>
 </article>

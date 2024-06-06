@@ -16,15 +16,24 @@
         <button id="order-oldest">Oldest</button>
       </section>
 
-      <section id="">
-        <h1>All Teams recruiting members</h1>
+      <section id="all-posts">
+        <h1>All Teams Recruiting Members</h1>
         <% if (!posts || posts.length === 0) { %>
-        <p>No posts found - maybe start creating some?</p>
-        <a class="btn" href="/teambuild">Create a new Post</a>
+        <p>No teams found - maybe start building some?</p>
+        <a class="btn" href="/buildteam">Create a new Team</a>
         <% } else { %>
         <ol id="posts-list">
           <% for (const post of posts) { %>
-          <li><%- include('includes/post-item', { post: post }) %></li>
+          <li class="post-item">
+            <h2><a href="/post/<%= post._id %>"><%= post.title %></a></h2>
+            <p><%= post.summary %></p>
+            <p class="post-item-author">By <%= post.who.nickname %></p>
+            <div class="post-actions">
+              <span
+                >Members: <%= post.members.length %> / <%= post.memNum %></span
+              >
+            </div>
+          </li>
           <% } %>
         </ol>
         <% } %>

@@ -10,13 +10,43 @@
       <h1><%= post.title %></h1>
       <section id="post-meta">
         <address>
-          <a href="/"><%= post.who.nickname %></a>
+          <a href="/another-profile/<%= post.who.id %>"><%= post.who.nickname %></a>
         </address>
         | <time datetime="<%= post.date %>"><%= post.humanReadableDate %></time>
       </section>
+      <p>Members: <%= post.members.length %> / <%= post.memNum %></p>
       <hr />
       <section>
         <p id="body"><%= post.body %></p>
+      </section>
+      <section>
+        <div class="post-actions">
+          <% if (forCheckMine === isMe) { %>
+          <form action="/post/<%= post._id %>/delete" method="POST">
+            <button class="btn btn-alt">Delete Post</button>
+          </form>
+          <a  href="/post/<%= post._id %>/edit">Edit post</a>
+          <% } %>
+        </div>
+
+        <% if (forCheckMine === isMe) { %>
+        <% } else { %>
+          <form action="/jointeam/<%= post._id %>" method="POST">
+            <button type="submit" class="btn"
+            <% if ((post.members.length == post.memNum) || (isMember))
+              { %> disabled <% } %>>
+            Join</button>
+          </form>
+        <% } %>
+
+        <h2>Team Members</h2>
+        <div id="current-members">
+          <% for (const member of members) { %>
+            <div class="member-box">
+              <a href="/another-profile/<%= member._id %>"><%= member.nickname %></p>
+            </div>
+          <% } %>
+        </div>
       </section>
   </body>
 </html>
