@@ -267,11 +267,20 @@ router.get("/userprofile/:userId", async function (req, res) {
       })
       .toArray();
 
+    // Step 1: Extract `_id` values from both arrays
+    const ownPostsIds = ownPosts.map((post) => post._id.toString());
+    const joinTeamsIds = joinTeams.map((post) => post._id.toString());
+
+    // Step 2: Filter out duplicates
+    const uniqueJoinTeams = joinTeams.filter(
+      (post) => !ownPostsIds.includes(post._id.toString())
+    );
+
     res.render("profile", {
       userData: userData,
       ownPosts: ownPosts,
-      joinTeams: joinTeams,
-      howManyTeams: ownPosts.length + joinTeams.length,
+      joinTeams: uniqueJoinTeams,
+      howManyTeams: ownPosts.length + uniqueJoinTeams.length,
     });
   } catch (error) {
     console.error("Error fetching teams:", error);
@@ -336,8 +345,26 @@ router.post(
     const userId = new ObjectId(req.session.user.id);
     const { nickname, location, politics, summary } = req.body;
 
-    if (!req.file) return res.send("Please upload a file");
     try {
+      if (!req.file) {
+        await db
+          .getDb()
+          .collection("users")
+          .updateOne(
+            { _id: userId },
+            {
+              $set: {
+                nickname: nickname,
+                location: location,
+                politics: politics,
+                summary: summary,
+              },
+            }
+          );
+
+        return res.redirect("/userprofile/" + userId);
+      }
+
       await db
         .getDb()
         .collection("users")
