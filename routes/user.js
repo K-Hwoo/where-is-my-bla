@@ -325,10 +325,23 @@ router.get("/another-profile/:anotherUserId", async function (req, res) {
       })
       .toArray();
 
+    // Step 1: Extract `_id` values from both arrays
+    const AnotherUserOwnPostsIds = AnotherUserOwnPosts.map((post) =>
+      post._id.toString()
+    );
+    const AnotherUserjoinTeamsIds = AnotherUserjoinTeams.map((post) =>
+      post._id.toString()
+    );
+
+    // Step 2: Filter out duplicates
+    const uniqueAnotherUserJoinTeams = AnotherUserjoinTeams.filter(
+      (post) => !AnotherUserOwnPostsIds.includes(post._id.toString())
+    );
+
     res.render("another-profile", {
       AnotherUserData: AnotherUserData,
       AnotherUserOwnPosts: AnotherUserOwnPosts,
-      AnotherUserjoinTeams: AnotherUserjoinTeams,
+      AnotherUserjoinTeams: uniqueAnotherUserJoinTeams,
       howManyTeams: AnotherUserOwnPosts.length + AnotherUserjoinTeams.length,
     });
   } catch (error) {
