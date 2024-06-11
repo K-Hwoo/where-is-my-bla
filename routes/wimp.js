@@ -55,6 +55,11 @@ router.post("/buildteam", async function (req, res) {
 
 // 팀 세부정보 보기 라우팅
 router.get("/post/:id", async function (req, res) {
+  if (!req.session.isAuthenticated) {
+    req.session.loginFlag.redirectTeamBuildPage = true;
+    return res.redirect("/login");
+  }
+
   try {
     const userId = new ObjectId(req.session.user.id);
     const postId = req.params.id;
@@ -129,6 +134,11 @@ router.post("/post/:postId/delete", async function (req, res) {
 
 // Edit Post
 router.get("/post/:postId/edit", async function (req, res) {
+  if (!req.session.isAuthenticated) {
+    req.session.loginFlag.redirectTeamBuildPage = true;
+    return res.redirect("/login");
+  }
+
   const postId = new ObjectId(req.params.postId);
   const post = await db.getDb().collection("posts").findOne({ _id: postId });
 
